@@ -18,9 +18,13 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.urlpatterns import format_suffix_patterns
 
+from drinks import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('drinks/', include('drinks.urls')),
+    path('users/', views.UserList.as_view()),
+    path('users/<int:pk>', views.UserDetails.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
