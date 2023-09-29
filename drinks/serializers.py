@@ -5,7 +5,7 @@ from drinks.models import Drink
 
 
 class DrinkSerializer(serializers.ModelSerializer):
-    owner = serializers.ReadOnlyField(source='owner.username')
+    owner = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
         model = Drink
