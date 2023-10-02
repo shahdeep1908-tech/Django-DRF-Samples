@@ -10,9 +10,21 @@ from rest_framework import generics, status
 
 
 class DrinkList(generics.ListCreateAPIView):
-    queryset = Drink.objects.all()
     serializer_class = DrinkSerializer
     permission_classes = [AuthenticateCreateAndAllowList]
+
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            return Drink.objects.filter(owner=self.request.user)
+        return Drink.objects.none()
+
+    def create(self, request, *args, **kwargs):
+        data = request.data
+        many = isinstance(data, list)
+        serializer = self.get_serializer(data=data, many=many)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        return Response(serializer.data, status.HTTP_201_CREATED)
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
