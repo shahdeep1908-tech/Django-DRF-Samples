@@ -2,10 +2,11 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 
 from drinks.models import Drink
+from bartender.serializers import BarTenderSerializer
 
 
 class DrinkSerializer(serializers.ModelSerializer):
-    owner = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    bartenders = BarTenderSerializer(many=True, read_only=True)
 
     class Meta:
         model = Drink
