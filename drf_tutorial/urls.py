@@ -25,6 +25,7 @@ urlpatterns = [
     path('drinks/', include('drinks.urls')),
     path('users/', views.UserList.as_view()),
     path('users/<int:pk>', views.UserDetails.as_view()),
+    path('bartender/', include('bartender.urls')),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

@@ -2,15 +2,15 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 
 from drinks.models import Drink
-from bartender.serializers import BarTenderSerializer
+from bartender.serializers import BarTenderDetailsSerializer
 
 
 class DrinkSerializer(serializers.ModelSerializer):
-    bartenders = BarTenderSerializer(many=True, read_only=True)
+    bartenders = BarTenderDetailsSerializer(many=True, read_only=True)
 
     class Meta:
         model = Drink
-        fields = ['id', 'name', 'description', 'owner']
+        fields = ['id', 'name', 'description', 'bartenders']
 
 
 class DrinkResponseSerializer(serializers.ModelSerializer):
